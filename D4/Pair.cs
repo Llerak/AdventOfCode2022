@@ -1,5 +1,5 @@
 ﻿namespace D4;
-
+//
 public class Pair
 {
     public Pair(string input)
