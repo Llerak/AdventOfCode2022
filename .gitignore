@@ -1,2 +1,8 @@
+#IDE
 .idea
-/.idea
+*.csproj
+*.sln
+
+#debug
+bin/
+obj/
