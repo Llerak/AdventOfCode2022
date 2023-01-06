@@ -9,14 +9,13 @@ class Program
 
         string[] input = File.ReadAllText("../../../data/input.txt").Split("\r\n");
 
-        int[,] snake = {{5,5},{5,5}};
+        int[,] snake = {{5,5 },{5,5}};
 
         foreach (string var in input)
         {
-            string[] parameters = var.Split(" ",StringSplitOptions.RemoveEmptyEntries);
+            string[] parameters = var.Split(" ", StringSplitOptions.RemoveEmptyEntries);
             Move(parameters[0], Int32.Parse(parameters[1]));
         }
-        
         Console.WriteLine(Count(table));
         
         void Move(string direction, int amount)
@@ -25,28 +24,28 @@ class Program
             {
                 for (int i = 0; i < amount; i++)
                 {
-                    Up();    
+                    Up();
                 }
             }
             else if (direction == "R")
             {
                 for (int i = 0; i < amount; i++)
                 {
-                    Right();    
+                    Right();
                 }
             }
             else if (direction == "D")
             {
-                for (int i = 1; i < amount; i++)
+                for (int i = 0; i < amount; i++)
                 {
-                    Down();    
+                    Down();
                 }
             }
             else if (direction == "L")
             {
-                for (int i = 1; i < amount; i++)
+                for (int i = 0; i < amount; i++)
                 {
-                    Left();    
+                    Left();
                 }
             }
         }
@@ -64,7 +63,7 @@ class Program
                 else if (DistanceInDiagonal(snake[i - 1, 0], snake[i - 1, 1], snake[i, 0], snake[i, 1]))
                 {
                     //case1
-                    if (DistanceInOne(snake[i - 1, 0], snake[i - 1, 1], snake[i, 0]+1, snake[i, 1]-1))
+                    if (DistanceInOne(snake[i - 1, 0], snake[i - 1, 1], snake[i, 0] + 1, snake[i, 1] - 1))
                     {
                         snake[i, 0]++;
                         snake[i, 1]--;
@@ -75,8 +74,8 @@ class Program
                         snake[i, 0]--;
                         snake[i, 1]--;
                     }
-                    
                 }
+
                 table[snake[snake.GetLength(0) - 1, 1], snake[snake.GetLength(0) - 1, 0]] = 1;
             }
         }
@@ -106,6 +105,7 @@ class Program
                         snake[i, 1]++;
                     }
                 }
+
                 table[snake[snake.GetLength(0) - 1, 1], snake[snake.GetLength(0) - 1, 0]] = 1;
             }
         }
@@ -113,9 +113,9 @@ class Program
         void Down()
         {
             snake[0, 1]++;
+            table[snake[snake.GetLength(0) - 1, 1], snake[snake.GetLength(0) - 1, 0]] = 1;
             for (int i = 1; i < snake.GetLength(0); i++)
             {
-                table[snake[snake.GetLength(0) - 1, 0], snake[snake.GetLength(0) - 1, 1]] = 1;
                 if (DistanceInLine(snake[i - 1, 0], snake[i - 1, 1], snake[i, 0], snake[i, 1]))
                 {
                     snake[i, 1]++;
@@ -135,34 +135,38 @@ class Program
                         snake[i, 1]++;
                     }
                 }
+
+                table[snake[snake.GetLength(0) - 1, 1], snake[snake.GetLength(0) - 1, 0]] = 1;
             }
         }
 
         void Left()
         {
             snake[0, 0]--;
+            table[snake[snake.GetLength(0) - 1, 1], snake[snake.GetLength(0) - 1, 0]] = 1;
             for (int i = 1; i < snake.GetLength(0); i++)
             {
-                table[snake[snake.GetLength(0) - 1, 0], snake[snake.GetLength(0) - 1, 1]] = 1;
                 if (DistanceInLine(snake[i - 1, 0], snake[i - 1, 1], snake[i, 0], snake[i, 1]))
                 {
-                    snake[i - 1, 0]--;
+                    snake[i, 0]--;
                 }
                 else if (DistanceInDiagonal(snake[i - 1, 0], snake[i - 1, 1], snake[i, 0], snake[i, 1]))
                 {
                     //case1
-                    if (DistanceInOne(snake[i - 1, 0], snake[i - 1, 1], snake[i, 0] - 1, snake[i, 1] + 1))
+                    if (DistanceInOne(snake[i - 1, 0], snake[i - 1, 1], snake[i, 0] - 1, snake[i, 1] - 1))
                     {
                         snake[i, 0]--;
-                        snake[i, 1]++;
+                        snake[i, 1]--;
                     }
                     //case2
                     else
                     {
                         snake[i, 0]--;
-                        snake[i, 1]--;
+                        snake[i, 1]++;
                     }
                 }
+
+                table[snake[snake.GetLength(0) - 1, 1], snake[snake.GetLength(0) - 1, 0]] = 1;
             }
         }
 
@@ -173,12 +177,12 @@ class Program
 
         bool DistanceInDiagonal(int x1, int y1, int x2, int y2)
         {
-            return Math.Sqrt(Math.Pow(x2 - x1, 2) + Math.Pow(y2 - y1, 2)) >= 1.43 ;
+            return Math.Sqrt(Math.Pow(x2 - x1, 2) + Math.Pow(y2 - y1, 2)) >= 1.43;
         }
 
         bool DistanceInOne(int x1, int y1, int x2, int y2)
         {
-            return Math.Sqrt(Math.Pow(x2 - x1,2)+ Math.Pow(y2 - y1,2)) == 1;
+            return Math.Sqrt(Math.Pow(x2 - x1, 2) + Math.Pow(y2 - y1, 2)) == 1;
         }
 
         int[,] FillMatrixWithZero(int y, int x)
@@ -213,9 +217,3 @@ class Program
         }
     }
 }
-/*
-int x1 = 5;
-int x2 = 5;
-int y1 = 5;
-int y2 = 7;
-Console.(Math.Sqrt(Math.Pow(Convert.ToDouble(x2 - x1), 2) + Math.Pow(Convert.ToDouble(y2 - y1), 2)));*/
