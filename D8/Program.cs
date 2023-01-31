@@ -6,6 +6,7 @@ class Program
 {
     public static void Main()
     {
+        Console.WriteLine("hola");
         Stopwatch time = new Stopwatch();
         time.Start();
         string[] input = File.ReadAllText("../../../data/input.txt").Split("\r\n");
